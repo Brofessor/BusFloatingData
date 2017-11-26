@@ -18,7 +18,9 @@ package de.nierbeck.vertx.data.stream
 
 import io.vertx.lang.scala.ScalaVerticle
 import io.vertx.scala.ext.web.client.WebClient
+import io.vertx.ext.web.client.WebClientOptions
 import io.vertx.scala.ext.web.codec.BodyCodec
+import io.vertx.core.net.ProxyOptions
 import de.nierbeck.floating.data.domain.{RouteInfos, Routes, Vehicle}
 import com.englishtown.vertx.cassandra.CassandraSession
 import com.englishtown.vertx.cassandra.impl.DefaultCassandraSession
@@ -44,8 +46,13 @@ class HttpClientVerticle extends ScalaVerticle{
 
       foo(v)
     })
-
-    var client = WebClient.create(vertx)
+    final Optional<ProxyOptions> proxyOptions = Optional.of(new ProxyOptions()
+               .setHost("http://10.60.64.12")
+               .setPort(8080);
+    
+    final WebClientOptions webClientOptions = new WebClientOptions()
+    webClientOptions.setProxyOptions(proxyOptions.get())
+    var client = WebClient.create(vertx, webClientOptions)
     client.get(80, "api.metro.net", "/agencies/lametro/routes/").as(BodyCodec.json(classOf[RouteInfos])).sendFuture().onComplete{
       case Success(result) => {
         var response = result

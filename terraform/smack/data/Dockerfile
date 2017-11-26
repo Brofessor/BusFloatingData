@@ -3,7 +3,7 @@ FROM cassandra:3.0.7
 RUN apt-get update && \
     apt-get install -y git && \
     mkdir -p /opt/bus-demo && \
-    git clone https://github.com/ANierbeck/BusFloatingData /opt/bus-demo
+    git clone https://github.com/Brofessor/BusFloatingData /opt/bus-demo
 
 RUN git -C /opt/bus-demo pull
 
