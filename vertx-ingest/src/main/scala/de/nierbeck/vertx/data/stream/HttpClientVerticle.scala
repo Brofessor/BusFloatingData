@@ -47,7 +47,7 @@ class HttpClientVerticle extends ScalaVerticle{
       foo(v)
     })
     final Optional<ProxyOptions> proxyOptions = Optional.of(new ProxyOptions()
-               .setHost("http://10.60.64.12")
+               .setHost("http://10.60.17.102")
                .setPort(8080);
     
     final WebClientOptions webClientOptions = new WebClientOptions()
